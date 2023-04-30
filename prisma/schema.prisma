@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Notes {
+    id        String   @id @default(cuid())
+    authorId  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    title     String   @default("Untitled Note") @db.VarChar(255)
+    content   String   @default("") @db.Text
+    tags      Tag[]
+    pinned    Boolean  @default(false)
+    priority  Int      @default(0)
+    archived  Boolean  @default(false)
+
+    @@index([authorId])
+}
+
+model Tag {
+    id      String  @id @default(cuid())
+    name    String  @db.VarChar(255)
+    Notes   Notes?  @relation(fields: [notesId], references: [id])
+    notesId String?
+
+    @@index([notesId])
+}
