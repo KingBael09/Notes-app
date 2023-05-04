@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Head from "next/head";
-import { RouterOutputs, api } from "~/utils/api";
+import { type RouterOutputs, api } from "~/utils/api";
 import { LoadingPage } from "~/components/loading";
-import { ArrowLeft, ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { Button, buttonVariants } from "~/components/ui/button";
 import Loading from "../../components/loading/index";
@@ -46,7 +46,7 @@ const Note: NextPage = () => {
 
   if (isNoteLoading) return <LoadingPage />;
 
-  if (!NoteData) return <div>Something Went wrong</div>;
+  if (!NoteData || isNoteError) return <div>Something Went wrong</div>;
 
   // ! THis shit is temp
 
