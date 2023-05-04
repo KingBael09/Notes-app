@@ -53,3 +53,5 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+// TODO: Rename the app to NoteX
